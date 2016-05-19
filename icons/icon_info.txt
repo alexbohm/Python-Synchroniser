@@ -1,1 +1,4 @@
-These are simple icons for the gui.
+To Make Custom Icons:
+1: Make a folder containing icons named the same as the default ones.
+2: Change the value of the "icons" key to the a string with the same name as your folder in config.py
+3: Poof
