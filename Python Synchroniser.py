@@ -35,10 +35,14 @@ class row(object):
 		self.des = False
 		self.row = row
 		self.pos = 5
-		self.open = Button(win, text="Open", command=lambda: self.l_file())
-		self.a = Button(win, text="Add", command=lambda: self.add())
-		self.r = Button(win, text="Remove", command=lambda: self.rem())
-		self.d = Button(win, text="X", command=lambda: self.destroy())
+		self.o_i = PhotoImage(file="%s/icons/open.gif" % (cwd))
+		self.open = Button(win, image=self.o_i, command=lambda: self.l_file())
+		self.a_i = PhotoImage(file="%s/icons/add.gif" % (cwd))
+		self.a = Button(win, image=self.a_i, command=lambda: self.add())
+		self.r_i = PhotoImage(file="%s/icons/sub.gif" % (cwd))
+		self.r = Button(win, image=self.r_i, command=lambda: self.rem())
+		self.d_i = PhotoImage(file="%s/icons/destroy.gif" % (cwd))
+		self.d = Button(win, image=self.d_i, command=lambda: self.destroy())
 		self.m_i = PhotoImage(file="%s/icons/mute_off.gif" % (cwd))
 		self.m = Button(win, image=self.m_i, command=lambda: self.mute())
 		self.a.grid(row=row, column=4)
@@ -56,7 +60,10 @@ class row(object):
 		if self.length+1 > len(self.buts): self.buts[self.length+5] = single([self.row, self.length+5])
 		else: self.buts[self.length+5].but.grid(row=self.row, column=self.length+5)
 		self.length+=1
-	def rem(self): self.buts[self.length+4].but.grid_remove(); self.length -= 1
+	def rem(self): 
+		if self.length != 0: 
+			self.buts[self.length+4].but.grid_remove() 
+			self.length -= 1
 	def mute(self):
 		if self.act:
 			self.act = False
@@ -83,22 +90,21 @@ class row(object):
 		self.d.grid_remove()
 		for b in self.buts:
 			self.buts[b].but.grid_remove()
-"""bob = row(0, 10)
-bill = row(1, 5)
-for a in range(1,1000):
-	win.after(a*100, lambda: bob.next())
-	win.after(a*100, lambda: bill.next())"""
 class master(object):
 	def __init__(self, de=100):
 		self.rows={}
 		self.delay = de
 		self.st = False
-		self.a = Button(win, text="Add Row", command=lambda: self.add())
+		self.a_i = PhotoImage(file="%s/icons/add.gif" % (cwd))
+		self.a = Button(win, image=self.a_i, command=lambda: self.add())
 		self.a.grid(row=len(self.rows), column=0)
-		self.s = Button(win, text="Start", command=lambda: self.start())
+		self.s_i = PhotoImage(file="%s/icons/start.gif" % (cwd))
+		self.s = Button(win, image=self.s_i, command=lambda: self.start())
 		self.s.grid(row=len(self.rows), column=1)
-		self.sto = Button(win, text="Stop", command=lambda: self.stop())
+		self.sto_i = PhotoImage(file="%s/icons/stop.gif" % (cwd))
+		self.sto = Button(win, image=self.sto_i, command=lambda: self.stop())
 		self.sto.grid(row=len(self.rows), column=2)
+		self.add()
 		self.add()
 	def stop(self): self.st = True; self.s.configure(state=NORMAL)
 	def add(self):
