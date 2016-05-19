@@ -1,31 +1,38 @@
 import tkFileDialog as fd
 from Tkinter import *
-from os import getcwd, path
+from os import getcwd
 from tkSnack import initializeSnack,Sound
+try:
+  import config as settings
+except ImportError:
+  print "Couldn't Find config.py, Using default settings"
+  settings = {
+    "icons":"default",
+    }
 cwd = getcwd()
 win = Tk()
 initializeSnack(win)
 class single(object):
 	def __init__(self, pos=[0,0]):
-		self.img = PhotoImage(file="%s/icons/button_off.gif" % (cwd))
+		self.img = PhotoImage(file="%s/icons/%s/button_off.gif" % (settings["icons"],cwd))
 		self.but = Button(win, image=self.img, command=lambda: self.switch())
 		self.state = False
 		self.but.grid(row=pos[0], column=pos[1])
 	def switch(self):
 		if self.state==False:
 			self.state = True
-			self.img = PhotoImage(file="%s/icons/button_on.gif" % (cwd))
+			self.img = PhotoImage(file="%s/icons/%s/button_on.gif" % (settings["icons"],cwd))
 			self.but.configure(image=self.img)
 		else:
 			self.state = False
-			self.img = PhotoImage(file="%s/icons/button_off.gif" % (cwd))
+			self.img = PhotoImage(file="%s/icons/%s/button_off.gif" % (settings["icons"],cwd))
 			self.but.configure(image=self.img)
 	def active(self, st=False):
 		high = ""
 		state = "off"
 		if self.state==True: state = "on"
 		if st==True: high = "_highlight"
-		self.img = PhotoImage(file="%s/icons/button_%s%s.gif" % (cwd,state,high))
+		self.img = PhotoImage(file="%s/icons/%s/button_%s%s.gif" % (settings["icons"],cwd,state,high))
 		self.but.configure(image=self.img)
 class row(object):
 	def __init__(self, row=0, length=5):
@@ -35,15 +42,15 @@ class row(object):
 		self.des = False
 		self.row = row
 		self.pos = 5
-		self.o_i = PhotoImage(file="%s/icons/open.gif" % (cwd))
+		self.o_i = PhotoImage(file="%s/icons/%s/open.gif" % (settings["icons"],cwd))
 		self.open = Button(win, image=self.o_i, command=lambda: self.l_file())
-		self.a_i = PhotoImage(file="%s/icons/add.gif" % (cwd))
+		self.a_i = PhotoImage(file="%s/icons/%s/add.gif" % (settings["icons"],cwd))
 		self.a = Button(win, image=self.a_i, command=lambda: self.add())
-		self.r_i = PhotoImage(file="%s/icons/sub.gif" % (cwd))
+		self.r_i = PhotoImage(file="%s/icons/%s/sub.gif" % (settings["icons"],cwd))
 		self.r = Button(win, image=self.r_i, command=lambda: self.rem())
-		self.d_i = PhotoImage(file="%s/icons/destroy.gif" % (cwd))
+		self.d_i = PhotoImage(file="%s/icons/%s/destroy.gif" % (settings["icons"],cwd))
 		self.d = Button(win, image=self.d_i, command=lambda: self.destroy())
-		self.m_i = PhotoImage(file="%s/icons/mute_off.gif" % (cwd))
+		self.m_i = PhotoImage(file="%s/icons/%s/mute_off.gif" % (settings["icons"],cwd))
 		self.m = Button(win, image=self.m_i, command=lambda: self.mute())
 		self.a.grid(row=row, column=4)
 		self.r.grid(row=row, column=3)
@@ -67,11 +74,11 @@ class row(object):
 	def mute(self):
 		if self.act:
 			self.act = False
-			self.m_i = PhotoImage(file="%s/icons/mute_on.gif" % (cwd))
+			self.m_i = PhotoImage(file="%s/icons/%s/mute_on.gif" % (settings["icons"],cwd))
 			self.m.configure(image=self.m_i)
 		else:
 			self.act = True
-			self.m_i = PhotoImage(file="%s/icons/mute_off.gif" % (cwd))
+			self.m_i = PhotoImage(file="%s/icons/%s/mute_off.gif" % (settings["icons"],cwd))
 			self.m.configure(image=self.m_i)
 	def next(self):
 		if self.act:
@@ -95,13 +102,13 @@ class master(object):
 		self.rows={}
 		self.delay = de
 		self.st = False
-		self.a_i = PhotoImage(file="%s/icons/add.gif" % (cwd))
+		self.a_i = PhotoImage(file="%s/icons/%s/add.gif" % (settings["icons"], cwd))
 		self.a = Button(win, image=self.a_i, command=lambda: self.add())
 		self.a.grid(row=len(self.rows), column=0)
-		self.s_i = PhotoImage(file="%s/icons/start.gif" % (cwd))
+		self.s_i = PhotoImage(file="%s/icons/%s/start.gif" % (settings["icons"], cwd))
 		self.s = Button(win, image=self.s_i, command=lambda: self.start())
 		self.s.grid(row=len(self.rows), column=1)
-		self.sto_i = PhotoImage(file="%s/icons/stop.gif" % (cwd))
+		self.sto_i = PhotoImage(file="%s/icons/%s/stop.gif" % (settings["icons"], cwd))
 		self.sto = Button(win, image=self.sto_i, command=lambda: self.stop())
 		self.sto.grid(row=len(self.rows), column=2)
 		self.add()
