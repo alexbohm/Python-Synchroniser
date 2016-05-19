@@ -1,0 +1,3 @@
+gui = {
+"icons":"default"
+}
