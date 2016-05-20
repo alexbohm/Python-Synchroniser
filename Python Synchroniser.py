@@ -2,13 +2,7 @@ import tkFileDialog as fd
 from Tkinter import *
 from os import getcwd
 from tkSnack import initializeSnack,Sound
-try:
-  import config as settings
-except ImportError:
-  print "Couldn't Find config.py, Using default settings"
-  settings = {
-    "icons":"default",
-    } #change so it does default
+import config as settings
 cwd = getcwd()
 win = Tk()
 initializeSnack(win)
